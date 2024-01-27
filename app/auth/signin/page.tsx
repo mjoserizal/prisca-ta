@@ -1,10 +1,51 @@
 // import "./globals.css";
+"use client";
 import "@/app/data-tables-css.css";
 import "@/app/satoshi.css";
 import "@/app/globals.css";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
-export default function signup() {
+export default function SignIn() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // ...
+  const handleLogin = async () => {
+    try {
+      const apiUrl = "https://7ff9-103-75-53-93.ngrok-free.app/api/login";
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Ambil token dari data
+        const token = data.token;
+
+        // Simpan token di cookie
+        Cookies.set("authToken", token, { expires: 7, secure: true });
+
+        console.log("Token berhasil disimpan:", token);
+
+        console.log("Login berhasil:", data);
+        window.location.href = "/product";
+      } else {
+        // Tangani kesalahan jika login gagal
+        console.error("Login gagal:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+    }
+  };
+  // ...
+
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden p-20">
       <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
@@ -21,6 +62,8 @@ export default function signup() {
             <input
               type="email"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
           <div className="mb-2">
@@ -32,6 +75,8 @@ export default function signup() {
             <input
               type="password"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
           </div>
           <Link
@@ -40,8 +85,11 @@ export default function signup() {
             Forget Password?
           </Link>
           <div className="mt-2">
-            <Link href={`/dashboard`}>
-              <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+            <Link href={``}>
+              <button
+                type="button"
+                onClick={handleLogin}
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                 Sign In
               </button>
             </Link>

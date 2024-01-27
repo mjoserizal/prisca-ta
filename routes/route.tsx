@@ -1,6 +1,6 @@
 // routes.js
 export const ROUTES = {
   HOME: "/",
-  SIGN_UP: "/signup",
+  SIGN_UP: "/auth/signup",
   DASHBOARD: "/dashboard",
 };
