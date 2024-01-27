@@ -14,10 +14,9 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // ...
   const handleLogin = async () => {
     try {
-      const apiUrl = "https://7ff9-103-75-53-93.ngrok-free.app/api/login";
+      const apiUrl = "https://d4d6-103-75-53-93.ngrok-free.app/api/login";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,18 +25,16 @@ export default function SignIn() {
 
       if (response.ok) {
         const data = await response.json();
-        // Ambil token dari data
         const token = data.token;
 
-        // Simpan token di cookie
-        Cookies.set("authToken", token, { expires: 7, secure: true });
-
+        localStorage.setItem("authToken", token);
         console.log("Token berhasil disimpan:", token);
 
         console.log("Login berhasil:", data);
-        window.location.href = "/product";
+
+        // Use the router to navigate to the /product page
+        router.push("/product");
       } else {
-        // Tangani kesalahan jika login gagal
         console.error("Login gagal:", response.statusText);
       }
     } catch (error) {
