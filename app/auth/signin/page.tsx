@@ -16,7 +16,7 @@ export default function SignIn() {
 
   const handleLogin = async () => {
     try {
-      const apiUrl = "https://d4d6-103-75-53-93.ngrok-free.app/api/login";
+      const apiUrl = "http://192.168.1.48:8000/api/login";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ export default function SignIn() {
         console.log("Login berhasil:", data);
 
         // Use the router to navigate to the /product page
-        router.push("/product");
+        router.push("/products");
       } else {
         console.error("Login gagal:", response.statusText);
       }

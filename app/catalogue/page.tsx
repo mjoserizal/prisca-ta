@@ -11,6 +11,7 @@ import { Catalogue } from "@/types/catalogue";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import CatalogueList from "./../../components/CatalogueCard/index";
 const catalogueData: Catalogue[] = [
   {
     image: "/images/product/product-01.png",
@@ -86,36 +87,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
                       /> */}
                     </div>
                     <div className="grid grid-cols-6 gap-4 mt-4 pt-12">
-                      {catalogueData.map((product) => (
-                        <a
-                          className="col-span-6 sm:col-span-3 md:col-span-2 lg:col-span-2 xl:col-span-1"
-                          key={product.name}>
-                          <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl transition duration-300">
-                            <Image
-                              className="w-full"
-                              src={product.image}
-                              width={60}
-                              height={50}
-                              alt="Product"
-                            />
-                            <div className="px-6 py-4 flex flex-col justify-center items-center">
-                              <div className="font-bold text-xl mb-2">
-                                {product.name}
-                              </div>
-                              <div className="font-thin text-xl mb-2">
-                                {product.category}
-                              </div>
-                              <button className="flex items-center mt-4 px-3 py-2 transition-colors duration-700 transform bg-primary hover:bg-meta-5 text-white rounded-full">
-                                <FontAwesomeIcon
-                                  icon={faSearch}
-                                  className="mr-2"
-                                />
-                                Search
-                              </button>
-                            </div>
-                          </div>
-                        </a>
-                      ))}
+                      <CatalogueList />
                     </div>
                   </div>
                 </div>

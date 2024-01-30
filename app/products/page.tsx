@@ -12,7 +12,7 @@ import { Catalogue } from "@/types/catalogue";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-
+import Link from "next/link";
 const ProductTable = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -22,8 +22,7 @@ const ProductTable = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const apiUrl =
-          "https://d4d6-103-75-53-93.ngrok-free.app/api/allProduct";
+        const apiUrl = "http://192.168.1.48:8000/api/allProduct";
         const token = localStorage.getItem("authToken");
 
         const response = await fetch(apiUrl, {
@@ -105,9 +104,9 @@ const ProductTable = () => {
                             {/* Content section */}
                             <div className="px-6 py-4 flex flex-col justify-between items-center h-52">
                               <div className="font-bold text-xl mb-2 overflow-hidden overflow-ellipsis max-w-full text-center">
-                                {product.title.length > 30
-                                  ? `${product.title.substring(0, 30)}...`
-                                  : product.title}
+                                {product.name
+                                  ? `${product.name}...`
+                                  : product.name}
                               </div>
                               <div className="font-thin text-xl mb-2 text-center">
                                 {product.category}
@@ -115,13 +114,16 @@ const ProductTable = () => {
                               <div className="font-bold text-xl mb-2 overflow-hidden overflow-ellipsis">
                                 ${product.price}
                               </div>
-                              <button className="flex items-center mt-4 px-3 py-2 transition-colors duration-700 transform bg-primary hover:bg-meta-5 text-white rounded-full">
+                              <Link
+                                href={`/products/${product.id}`}
+                                key={product.id}
+                                className="flex items-center mt-4 px-3 py-2 transition-colors duration-700 transform bg-primary hover:bg-meta-5 text-white rounded-full">
                                 <FontAwesomeIcon
                                   icon={faSearch}
                                   className="mr-2"
                                 />
                                 View Details
-                              </button>
+                              </Link>
                             </div>
                           </div>
                         </a>
